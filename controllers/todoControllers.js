@@ -99,7 +99,7 @@ const todoController = {
     );
   },
   async deleteATodo(req, res) {
-    Todo.findByIdAndDelete({_id:req.params.id},{}, (err) => {
+    Todo.findByIdAndDelete({_id:req.params.id}, (err) => {
       if (err) {
         res.status(500).json({
           error: "There was a server side error",
