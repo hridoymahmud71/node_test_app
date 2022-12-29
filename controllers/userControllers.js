@@ -28,7 +28,8 @@ const userController = {
 
   async login(req, res) {
     try {
-      const user = User.find({ username: req.body.username });
+      const user = await User.find({ username: req.body.username });
+      
 
       if (!(user && user.length > 0)) {
         res.status(401).json({
@@ -37,10 +38,10 @@ const userController = {
         return;
       }
 
-      const isValidPassword = bcrypt.compare(
+      const isValidPassword = await bcrypt.compare(
         req.body.password,
         user[0].password
-      );
+      );     
 
       if (!isValidPassword) {
         res.status(401).json({

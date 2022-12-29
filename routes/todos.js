@@ -1,6 +1,7 @@
 var express = require("express");
 const todoController = require("../controllers/todoControllers");
 var router = express.Router();
+const isAuthenticated = require("./../middlewares/isAuthenticated");
 
 /* CRUD below */
 
@@ -19,7 +20,7 @@ router.get("/language/:lang", todoController.getTodosByLanguage);
 // get one by id
 router.get("/:id", todoController.getATodo);
 
-router.post("/", todoController.addATodo);
+router.post("/",isAuthenticated, todoController.addATodo);
 
 // post multiple todo
 router.post("/multiple", todoController.addMultipleTodo);
