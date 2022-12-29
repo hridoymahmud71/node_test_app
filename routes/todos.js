@@ -7,6 +7,15 @@ var router = express.Router();
 // get all
 router.get("/", todoController.getAllTodo);
 
+// get active todos
+router.get("/active", todoController.getActiveTodos);
+
+// get todos where title has "js" in it
+router.get("/js", todoController.getTodosByJs);
+
+// get todos by specific language
+router.get("/language/:lang", todoController.getTodosByLanguage);
+
 // get one by id
 router.get("/:id", todoController.getATodo);
 

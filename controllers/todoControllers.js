@@ -16,6 +16,67 @@ const todoController = {
     });
   },
 
+  async getActiveTodos(req, res) {
+    const todo  = new Todo();
+    todo.findActive()
+      .select({
+        _id: 0,
+      })
+      .exec((err, data) => {
+        if (err) {
+          res.status(500).json({
+            error: "There was a server side error",
+          });
+          return;
+        }
+
+        res.status(200).json({
+          data: data,
+        });
+      });
+  },
+
+  async getTodosByJs(req, res) {
+    
+    Todo.findByJs()
+      .select({
+        _id: 0,
+      })
+      .exec((err, data) => {
+        if (err) {
+          res.status(500).json({
+            error: "There was a server side error",
+          });
+          return;
+        }
+
+        res.status(200).json({
+          data: data,
+        });
+      });
+  },
+
+  async getTodosByLanguage(req, res) {
+    
+    Todo.find().byLanguage(req.params.lang)
+      .select({
+        _id: 0,
+      })
+      .exec((err, data) => {
+        if (err) {
+          res.status(500).json({
+            error: "There was a server side error",
+          });
+          return;
+        }
+
+        res.status(200).json({
+          data: data,
+        });
+      });
+  },
+  
+
   async getAllTodo(req, res) {
     Todo.find({})
       .select({
