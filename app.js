@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose")
+const dotenv = require("dotenv")
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -11,6 +12,7 @@ var uploadRouter = require("./routes/upload");
 var todoRouter = require("./routes/todos");
 
 var app = express();
+dotenv.config();
 
 mongoose.connect("mongodb://localhost/node_test_app_mongo_db",
 {
@@ -34,7 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/user", usersRouter);
 app.use("/upload", uploadRouter);
 app.use("/todo", todoRouter);
 
