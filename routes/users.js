@@ -9,6 +9,8 @@ router.post("/signup", userController.signUp);
 
 // log user in to get a token
 router.post("/login", userController.login);
+// log user in to get a token
+router.get("/all", userController.getAllUsers);
 
 
 

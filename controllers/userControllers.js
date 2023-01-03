@@ -29,7 +29,6 @@ const userController = {
   async login(req, res) {
     try {
       const user = await User.find({ username: req.body.username });
-      
 
       if (!(user && user.length > 0)) {
         res.status(401).json({
@@ -41,7 +40,7 @@ const userController = {
       const isValidPassword = await bcrypt.compare(
         req.body.password,
         user[0].password
-      );     
+      );
 
       if (!isValidPassword) {
         res.status(401).json({
@@ -52,7 +51,7 @@ const userController = {
 
       // all clear , now generate token
       const token = jwt.sign(
-        { username: user[0].username },
+        { username: user[0].username, userId: user[0]._id },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
@@ -66,6 +65,27 @@ const userController = {
         error: "There was a server side error",
       });
       return;
+    }
+  },
+
+  async getAllUsers(req, res) {
+    try {
+
+      const users = await User.find({})
+    .populate("todos")
+    .select({
+      _id:0
+    });
+
+    res.status(200).json({
+      data: users,
+    });
+      
+    } catch (err) {
+      console.log("what error \n",err)
+      res.status(500).json({
+        error: "There was a server side error",
+      });
     }
   },
 };
